@@ -1,0 +1,74 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider      = "prisma-client-js"
+  binaryTargets = ["native", "rhel-openssl-1.0.x", "rhel-openssl-3.0.x"]
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id            String         @id @default(uuid())
+  email         String         @unique
+  password      String
+  firstName     String?
+  lastName      String?
+  dateOfBirth   String?
+  profession    String?
+  currency      String         @default("₹")
+  createdAt     DateTime       @default(now())
+  transactions  Transaction[]
+  budgets       Budget[]
+  subscriptions Subscription[]
+  categories    Category[]
+}
+
+model Category {
+  id     String @id @default(uuid())
+  name   String
+  type   String // INCOME, EXPENSE
+  userId String
+  user   User   @relation(fields: [userId], references: [id])
+
+  @@unique([userId, name, type])
+}
+
+model Transaction {
+  id          String   @id @default(uuid())
+  amount      Float
+  type        String // INCOME, EXPENSE
+  category    String
+  date        DateTime @default(now())
+  description String?
+  userId      String
+  user        User     @relation(fields: [userId], references: [id])
+}
+
+model Budget {
+  id        String   @id @default(uuid())
+  amount    Float
+  spent     Float    @default(0)
+  month     String
+  year      Int
+  category  String?
+  userId    String
+  user      User     @relation(fields: [userId], references: [id])
+  createdAt DateTime @default(now())
+}
+
+model Subscription {
+  id            String   @id @default(uuid())
+  name          String
+  cost          Float
+  renewalDate   DateTime
+  renewalPeriod String   @default("MONTHLY") // ONE_TIME, MONTHLY, QUARTERLY, YEARLY
+  status        String   @default("ACTIVE") // ACTIVE, INACTIVE
+  userId        String
+  user          User     @relation(fields: [userId], references: [id])
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+}
