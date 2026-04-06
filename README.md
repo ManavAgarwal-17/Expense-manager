@@ -202,8 +202,8 @@ This project is open source and available under the MIT License.
 
 ## 👨‍💻 Author
 
-**Aditya Verma**
-- GitHub: [@verma1039](https://github.com/verma1039)
+**Manav Agarwal**
+- GitHub: "https://github.com/ManavAgarwal-17"
 
 ## 🙏 Acknowledgments
 
