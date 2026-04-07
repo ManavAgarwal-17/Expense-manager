@@ -78,7 +78,7 @@ A modern, full-featured expense tracking application built with Next.js, featuri
 
 1. **Clone the repository**
 ```bash
-git clone https://github.com/verma1039/expense-manager.git
+git clone https://github.com/ManavAgarwal-17/Expense-manager.git
 cd expense-manager
 ```
 
